@@ -11,5 +11,4 @@ scale = Vector2(4.97656, 2.84375)
 texture = ExtResource("1_ig7tw")
 
 [node name="Car" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(319, 195)
-drifting_speed = 500.0
+position = Vector2(319, 360)

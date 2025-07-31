@@ -6,14 +6,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoj53"]
 size = Vector2(130, 128)
 
-[node name="CarContainer" type="Node2D"]
+[node name="Car" type="CharacterBody2D"]
 script = ExtResource("1_uoj53")
 
-[node name="Car" type="CharacterBody2D" parent="."]
-unique_name_in_owner = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Car"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7822p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Car"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_uoj53")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1, 57)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
