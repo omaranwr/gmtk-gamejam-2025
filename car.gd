@@ -17,9 +17,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	drifting_speed = Global.game_speed
-	acceleration = drifting_speed / (ms_to_max_speed / 1000)
-	friction = drifting_speed / (ms_to_stop / 1000)
+	var current_drifting_speed = min(Global.game_speed, drifting_speed) / 2.5
+	acceleration = current_drifting_speed / (ms_to_max_speed / 1000)
+	friction = current_drifting_speed / (ms_to_stop / 1000)
 	acceleration += friction
 	
 	velocity.y = -Global.game_speed
@@ -30,9 +30,10 @@ func _physics_process(delta: float) -> void:
 	if sign(velocity.x) == friction_direction:
 		velocity.x = 0
 	
-	velocity.x = clamp(velocity.x, -drifting_speed, drifting_speed)
+	velocity.x = clamp(velocity.x, -current_drifting_speed, current_drifting_speed)
 	
 	move_and_slide()
+	Global.player_position = position
 
 func _unhandled_input(_event: InputEvent) -> void:
 	direction = Input.get_axis("ui_left", "ui_right")
