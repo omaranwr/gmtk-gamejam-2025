@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://j7x12o6cbgvx"]
+
+[ext_resource type="Texture2D" uid="uid://dycxup6jyctwy" path="res://icon.svg" id="1_7822p"]
+[ext_resource type="Script" uid="uid://dnqyi33kqjqn8" path="res://car.gd" id="1_uoj53"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoj53"]
+size = Vector2(130, 128)
+
+[node name="CarContainer" type="Node2D"]
+script = ExtResource("1_uoj53")
+
+[node name="Car" type="CharacterBody2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Car"]
+texture = ExtResource("1_7822p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car"]
+shape = SubResource("RectangleShape2D_uoj53")
