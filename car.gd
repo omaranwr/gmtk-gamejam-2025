@@ -6,26 +6,23 @@ extends CharacterBody2D
 var direction: float = 0
 var acceleration: float = 200
 var friction: float = 200
-@export var max_speed: float = 250
-
-@export var speed: float = 10
+@export var drifting_speed: float = 250
 
 func _ready() -> void:
 	
-	acceleration = max_speed / (ms_to_max_speed / 1000)
-	friction = max_speed / (ms_to_stop / 1000)
+	acceleration = drifting_speed / (ms_to_max_speed / 1000)
+	friction = drifting_speed / (ms_to_stop / 1000)
 	
 	acceleration += friction
 
 func _physics_process(delta: float) -> void:
 	
-	max_speed = -velocity.y
-	acceleration = max_speed / (ms_to_max_speed / 1000)
-	friction = max_speed / (ms_to_stop / 1000)
+	drifting_speed = Global.game_speed
+	acceleration = drifting_speed / (ms_to_max_speed / 1000)
+	friction = drifting_speed / (ms_to_stop / 1000)
 	acceleration += friction
 	
-	velocity.y -= speed*delta
-	
+	velocity.y = -Global.game_speed
 	velocity.x += direction*acceleration*delta
 	
 	var friction_direction: int = -sign(velocity.x)
@@ -33,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	if sign(velocity.x) == friction_direction:
 		velocity.x = 0
 	
-	velocity.x = clamp(velocity.x, -max_speed, max_speed)
+	velocity.x = clamp(velocity.x, -drifting_speed, drifting_speed)
 	
 	move_and_slide()
 
