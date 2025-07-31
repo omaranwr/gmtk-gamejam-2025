@@ -1,11 +1,18 @@
 extends CharacterBody2D
 
+@export var ms_to_max_speed: float = 100
+@export var ms_to_stop: float = 50
+
 var direction: float = 0
-@export var speed: float = 200
-@export var friction: float = 200
+var speed: float = 200
+var friction: float = 200
 @export var max_speed: float = 500
 
 func _ready() -> void:
+	
+	speed = max_speed / (ms_to_max_speed / 1000)
+	friction = max_speed / (ms_to_stop / 1000)
+	
 	speed += friction
 
 func _physics_process(delta: float) -> void:
