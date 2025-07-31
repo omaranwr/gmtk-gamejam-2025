@@ -4,21 +4,29 @@ extends CharacterBody2D
 @export var ms_to_stop: float = 50
 
 var direction: float = 0
-var speed: float = 200
+var acceleration: float = 200
 var friction: float = 200
-@export var max_speed: float = 500
+@export var max_speed: float = 250
+
+@export var speed: float = 10
 
 func _ready() -> void:
 	
-	speed = max_speed / (ms_to_max_speed / 1000)
+	acceleration = max_speed / (ms_to_max_speed / 1000)
 	friction = max_speed / (ms_to_stop / 1000)
 	
-	speed += friction
+	acceleration += friction
 
 func _physics_process(delta: float) -> void:
-	velocity.y = -500
 	
-	velocity.x += direction*speed*delta
+	max_speed = -velocity.y
+	acceleration = max_speed / (ms_to_max_speed / 1000)
+	friction = max_speed / (ms_to_stop / 1000)
+	acceleration += friction
+	
+	velocity.y -= speed*delta
+	
+	velocity.x += direction*acceleration*delta
 	
 	var friction_direction: int = -sign(velocity.x)
 	velocity.x += friction*friction_direction*delta
@@ -34,4 +42,5 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 
 func _on_screen_exited() -> void:
-	position.y = 400
+	position.y = 100
+	
